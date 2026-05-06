@@ -11,9 +11,6 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#F5F5DC"> ```
 
-### 3. Optimasi CSS untuk Tinggi Layar
-Gunakan unit `vh` (viewport height) yang dinamis agar elemen tidak terpotong oleh *address bar* yang terkadang masih muncul sedikit di beberapa tipe HP. Tambahkan ini di bagian `<style>`:
-
 ```css
 body, .page {
     /* Menggunakan dvh (dynamic viewport height) untuk browser modern */
@@ -27,7 +24,7 @@ body, .page {
 
     <style>
         :root {
-            --beige: #F5F5DC;
+            --beige: #F5F5DC; 
             --gold: #C0A062;
             --charcoal: #2F2F2F;
             --white: #FFFFFF;
