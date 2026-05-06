@@ -11,8 +11,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#F5F5DC"> ```
 
-```css
-body, .page {
+
+<body>
+     .page {
     /* Menggunakan dvh (dynamic viewport height) untuk browser modern */
     height: 100vh;
     height: 100dvh; 
@@ -32,7 +33,7 @@ body, .page {
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Noto Sans JP', sans-serif; background-color: var(--beige); color: var(--charcoal); overflow: hidden; height: 100vh; }
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: var(--beige); color: var(--charcoal); overflow: hidden; height: 100vh; height: 100dvh}
         h1, h2, h3, .serif { font-family: 'Noto Serif JP', serif; }
 
         /* --- LUXURY CURTAIN SYSTEM --- */
