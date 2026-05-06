@@ -54,7 +54,7 @@
             margin-bottom: 25px; width: 100%; outline: none; background: transparent;
         }
 
-        /* --- STYLING MODAL PESAN (PENGGANTI ALERT) --- */
+        /* --- STYLING MODAL PESAN --- */
         #custom-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7); z-index: 3000;
@@ -70,7 +70,7 @@
         .modal-box h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--charcoal); }
         .modal-box p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; color: #555; }
 
-        /* --- STYLING TOAST NOTIFICATION --- */
+        /* --- STYLING TOAST & ANTI-SS --- */
         #toast-notification {
             position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
             background: var(--charcoal); color: var(--gold); padding: 12px 25px;
@@ -79,15 +79,23 @@
             border: 1px solid var(--gold); align-items: center; gap: 10px;
         }
 
-        /* -------------------------------------------------- */
+        #anti-ss-toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85); color: #fff; padding: 15px 25px;
+            border-radius: 10px; font-size: 0.9rem; z-index: 5000; display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5); border-left: 5px solid var(--gold);
+            width: 90%; max-width: 400px; text-align: center;
+        }
 
+        /* --- PAGE TRANSITION SYSTEM --- */
         .page {
             position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
             display: none; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; padding: 20px; overflow-y: auto; background: var(--beige);
             background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+            transition: all 0.8s ease-in-out;
         }
-        .page.active { display: flex; }
+        .page.active { display: flex; animation: slideInUp 0.8s forwards; }
 
         #page-1 { background-color: var(--beige); position: relative; overflow: hidden; }
         .cover-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/oriental-tiles.png'); opacity: 0.15; z-index: 0; animation: bgMove 60s linear infinite; }
@@ -108,7 +116,9 @@
         .timer-box { background: var(--charcoal); color: var(--gold); width: 60px; height: 75px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--gold); }
         .timer-box span { font-size: 1.4rem; font-weight: bold; }
         .timer-box label { font-size: 0.6rem; color: var(--white); text-transform: uppercase; }
-        .card-outline { background: white; border: 1px solid var(--gold); padding: 5px; margin: 10px 0; width: 100%; max-width: 400px; }
+        
+        .card-outline { background: white; border: 1px solid var(--gold); padding: 5px; margin: 10px 0; width: 100%; max-width: 400px; transform: scale(0.9); opacity: 0; transition: all 1s delay 0.3s; }
+        .page.active .card-outline { transform: scale(1); opacity: 1; }
         .card-inner { border: 1px solid var(--gold); padding: 20px; position: relative; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 450px; }
@@ -116,41 +126,45 @@
         .gallery-frame:hover { transform: scale(1.05); }
         .gallery-img { width: 100%; height: 110px; object-fit: cover; display: block; }
 
-        /* ATM / Bank Cards */
         .gift-box { background: #fff; border: 2px dashed var(--gold); padding: 20px; margin-bottom: 20px; width: 100%; max-width: 450px; }
         .bank-card { background: white; border-left: 5px solid var(--gold); padding: 15px; margin: 10px 0; width: 100%; max-width: 450px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
         .bank-logo { height: 25px; max-width: 80px; object-fit: contain; margin: 0 10px; }
 
         .btn-gold { background: var(--gold); color: white; border: none; padding: 12px 30px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(192, 160, 98, 0.3); font-family: 'Noto Sans JP'; font-weight: bold; }
         .btn-nav { background: var(--gold); color: white; border: none; padding: 10px 20px; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .nav-container { position: fixed; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 15px; z-index: 100; }
+        
+        .nav-container { position: fixed; bottom: 80px; width: 100%; display: flex; justify-content: center; gap: 15px; z-index: 100; }
 
-        #wish-wall { width: 100%; max-width: 400px; max-height: 200px; overflow-y: auto; background: rgba(255, 255, 255, 0.5); border: 1px solid var(--gold); padding: 15px; margin-top: 15px; text-align: left; }
-        .wish-item { border-bottom: 1px solid var(--gold); padding: 8px 0; }
+        #wish-wall { width: 100%; max-width: 400px; max-height: 300px; overflow-y: auto; background: rgba(255, 255, 255, 0.5); border: 1px solid var(--gold); padding: 15px; margin-top: 15px; text-align: left; scroll-behavior: smooth; }
+        .wish-item { border-bottom: 1px solid var(--gold); padding: 10px 0; animation: fadeIn 0.5s; }
         .wish-name { font-weight: bold; color: var(--gold); font-size: 0.85rem; }
         .status-badge { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; margin-left: 5px; color: white; }
         .bg-hadir { background: #4a7c44; }
         .bg-tidak { background: #a43a3a; }
 
+        .counter-box { margin-bottom: 15px; padding: 10px; background: white; border: 1px solid var(--gold); width: 100%; max-width: 400px; font-size: 0.9rem; font-weight: bold; }
+
         input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid var(--gold); font-family: 'Noto Sans JP'; outline: none; }
         input[readonly] { background-color: #f0f0f0; cursor: not-allowed; }
         #audio-ctrl { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--gold); width: 45px; height: 45px; border-radius: 50%; display: none; align-items: center; justify-content: center; color: white; cursor: pointer; }
 
-        @media (max-width: 600px) { .page { padding-bottom: 140px; } .wedding-title h1 { font-size: 2.2rem; } .gallery-img { height: 80px; } .modal-box { width: 90%; } }
+        @media (max-width: 600px) { .page { padding-bottom: 180px; } .wedding-title h1 { font-size: 2.2rem; } .gallery-img { height: 80px; } .modal-box { width: 90%; } }
     </style>
 </head>
 <body>
 
-    <!-- Toast Notification -->
+    <div id="anti-ss-toast" class="animate__animated">
+        Tidak dapat mengambil screenshot, silahkan bagikan saja Link Undangan ini
+    </div>
+
     <div id="toast-notification" class="animate__animated">
         <i class="fas fa-check-circle"></i> <span id="toast-message">Berhasil disalin</span>
     </div>
 
     <div id="custom-modal">
         <div class="modal-box animate__animated animate__zoomIn">
-            <i class="fas fa-envelope-open-heart"></i>
             <h3 class="serif">Pesan Terkirim</h3>
-            <p id="modal-text">Kami yang berbahagia mengucapkan terimakasih atas konfirmasi kehadiran dan ucapan hangatnya.</p>
+            <p id="modal-text">Kami yang berbahagia mengucapkan terimakasih atas konfirmasi kehadiran dan ucapan hangatnya[cite: 1].</p>
             <button class="btn-gold" onclick="hideModal()" style="width: 100%;">Tutup</button>
         </div>
     </div>
@@ -171,6 +185,7 @@
     <div id="audio-ctrl" onclick="toggleAudio()"><i id="audio-icon" class="fas fa-music"></i></div>
     <audio id="bg-music" loop><source src="https://www.chosic.com/wp-content/uploads/2021/07/Sakura-Sakura-Traditional-Japanese-Music.mp3" type="audio/mpeg"></audio>
 
+    <!-- HALAMAN 1 -->
     <div id="page-1" class="page active">
         <div class="cover-pattern"></div>
         <div class="mempelai-frame animate__animated animate__fadeInDown">
@@ -179,7 +194,7 @@
         <div class="cover-content animate__animated animate__fadeInUp">
             <div class="wedding-title">
                 <span>THE WEDDING OF</span>
-                <h1>Fulan Maulana <br> & <br> Fulani</h1>
+                <h1>Fulan Putra Menawan <br> & <br> Fulani Cantika Putri</h1>
                 <div class="date-badge">31 . 05 . 2026</div>
             </div>
 
@@ -194,18 +209,19 @@
         </div>
     </div>
 
+    <!-- HALAMAN 2 -->
     <div id="page-2" class="page">
         <h2 class="serif" style="color: var(--gold); margin-bottom: 20px;">Mempelai</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
             <div>
                 <img src="https://drive.google.com/uc?export=view&id=1akJwjhLp8jPU_z93vsjmeEmbn2j8T5ZA" style="width: 150px; height: 220px; object-fit: cover; border: 2px solid var(--gold); padding: 5px; background: white; margin-bottom: 15px;">
-                <h3 class="serif">Fulan Maulana</h3>
-                <p style="font-size: 0.8rem;">Putra dari<br><b>Bpk. Suwiryo Diningrat & Ibu Retno Ngademiyati</b></p>
+                <h3 class="serif">Fulan Putra Menawan</h3>
+                <p style="font-size: 0.8rem;">Putra Ke-15 dari<br><b>Bpk. Suwiryo Diningrat & Ibu Retno Ngademiyati</b></p>
             </div>
             <div>
                 <img src="https://drive.google.com/uc?export=view&id=1NtmC46CDoKrTPfmM9NSjCH91uoXKMI7G" style="width: 150px; height: 220px; object-fit: cover; border: 2px solid var(--gold); padding: 5px; background: white; margin-bottom: 15px;">
-                <h3 class="serif">Fulani</h3>
-                <p style="font-size: 0.8rem;">Putri dari<br><b>Bpk. Cokro Wolo & Ibu Dewi Astuti</b></p>
+                <h3 class="serif">Fulani Cantika Putri</h3>
+                <p style="font-size: 0.8rem;">Putri Ke-21 dari<br><b>Bpk. Cokro Wolo & Ibu Dewi Astuti</b></p>
             </div>
         </div>
         <div class="nav-container">
@@ -213,6 +229,7 @@
         </div>
     </div>
 
+    <!-- HALAMAN 3 -->
     <div id="page-3" class="page">
         <h2 class="serif" style="color: var(--gold); font-size: 2rem; margin-bottom: 20px;">Save The Date</h2>
         <div class="timer-container">
@@ -221,18 +238,18 @@
             <div class="timer-box"><span id="minutes">00</span><label>Menit</label></div>
             <div class="timer-box"><span id="seconds">00</span><label>Detik</label></div>
         </div>
-        <div class="card-outline animate__animated animate__zoomIn">
+        <div class="card-outline">
             <div class="card-inner">
                 <h3 class="serif">Akad Nikah</h3>
                 <p><i class="far fa-calendar-alt"></i> Minggu, 31 Mei 2026</p>
-                <p><i class="far fa-clock"></i> 09:00 WIB - Selesai</p>
+                <p><i class="far fa-clock"></i> 09:00 - 10:15 WIB</p>
             </div>
         </div>
-        <div class="card-outline animate__animated animate__zoomIn">
+        <div class="card-outline">
             <div class="card-inner">
                 <h3 class="serif">Resepsi</h3>
                 <p><i class="far fa-calendar-alt"></i> Minggu, 31 Mei 2026</p>
-                <p><i class="far fa-clock"></i> 11:00 WIB - Selesai</p>
+                <p><i class="far fa-clock"></i> 10:20 WIB - Selesai</p>
             </div>
         </div>
         <div style="margin-top: 20px;">
@@ -248,6 +265,7 @@
         </div>
     </div>
 
+    <!-- HALAMAN 4 -->
     <div id="page-4" class="page">
         <h2 class="serif" style="color: var(--gold); margin-bottom: 25px;">Momen Bahagia</h2>
         <div class="gallery-grid">
@@ -264,6 +282,7 @@
         </div>
     </div>
 
+    <!-- HALAMAN 5 -->
     <div id="page-5" class="page">
         <h2 class="serif" style="color: var(--gold); margin-bottom: 10px;">Tanda Kasih</h2>
         <p style="font-size: 0.85rem; max-width: 400px; margin-bottom: 25px;">Bagi tamu yang ingin memberikan tanda kasih, dapat melalui:</p>
@@ -282,7 +301,7 @@
             <div style="text-align: left;">
                 <p style="font-size: 0.7rem; font-weight: bold; color: var(--gold);">CIMB NIAGA</p>
                 <p id="rek1" style="font-weight: bold; font-size: 1rem;">665556655678884</p>
-                <p style="font-size: 0.7rem;">A/N Fulan Maulana</p>
+                <p style="font-size: 0.7rem;">A/N Fulan Putra Menawan</p>
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/CIMB_Niaga_logo.svg/1200px-CIMB_Niaga_logo.svg.png" class="bank-logo">
             <button onclick="copyText('rek1')" class="btn-gold" style="padding: 5px 12px; font-size: 0.65rem;">Salin</button>
@@ -292,7 +311,7 @@
             <div style="text-align: left;">
                 <p style="font-size: 0.7rem; font-weight: bold; color: var(--gold);">BANK BRI</p>
                 <p id="rek2" style="font-weight: bold; font-size: 1rem;">55555678888997</p>
-                <p style="font-size: 0.7rem;">A/N Fulan Maulana</p>
+                <p style="font-size: 0.7rem;">A/N Fulan Putra Menawan</p>
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/BRI_2020.svg/1200px-BRI_2020.svg.png" class="bank-logo">
             <button onclick="copyText('rek2')" class="btn-gold" style="padding: 5px 12px; font-size: 0.65rem;">Salin</button>
@@ -302,7 +321,7 @@
             <div style="text-align: left;">
                 <p style="font-size: 0.7rem; font-weight: bold; color: var(--gold);">BANK BSI</p>
                 <p id="rek3" style="font-weight: bold; font-size: 1rem;">66777889999</p>
-                <p style="font-size: 0.7rem;">A/N Fulani Maulani</p>
+                <p style="font-size: 0.7rem;">A/N Fulani Cantika Putri</p>
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bank_Syariah_Indonesia_logo.svg/1200px-Bank_Syariah_Indonesia_logo.svg.png" class="bank-logo">
             <button onclick="copyText('rek3')" class="btn-gold" style="padding: 5px 12px; font-size: 0.65rem;">Salin</button>
@@ -314,8 +333,14 @@
         </div>
     </div>
 
+    <!-- HALAMAN 6 -->
     <div id="page-6" class="page">
-        <h2 class="serif" style="color: var(--gold);">Kehadiran & Doa</h2>
+        <h2 class="serif" style="color: var(--gold); margin-bottom: 10px;">Kehadiran & Doa</h2>
+        
+        <div class="counter-box">
+            <span id="count-hadir">179</span> Orang akan hadir | <span id="count-tidak">17</span> Orang berhalangan hadir
+        </div>
+
         <form id="rsvp-form" style="width: 100%; max-width: 400px;">
             <input type="text" id="rsvp-name" placeholder="Nama Lengkap" readonly required>
             <select id="rsvp-status" required>
@@ -324,29 +349,10 @@
                 <option value="Tidak Hadir">Maaf, Berhalangan Hadir</option>
             </select>
             <textarea id="rsvp-wish" placeholder="Tuliskan Ucapan & Doa Restu Anda..." rows="4" required></textarea>
-            <button type="submit" class="btn-gold" style="width: 100%; margin-top: 10px;">Kirim Ucapan & Status</button>
+            <button type="submit" id="submit-btn" class="btn-gold" style="width: 100%; margin-top: 10px;">Kirim Ucapan & Status</button>
         </form>
 
-        <div id="wish-wall">
-            <div class="wish-item">
-                <p class="wish-name">Firly Cantiks <span class="status-badge bg-hadir">Hadir</span></p>
-                <p style="font-size: 0.8rem; font-style: italic;">Selamat menempuh hidup baru Sayangkuu.. moga lancar mpe hari H..Samawa ya sayang..peyuuk jauh🥹🤲🏻🤗!</p>
-            </div>
-        </div>
-
-        <div id="wish-wall">
-            <div class="wish-item">
-                <p class="wish-name">Alexander Robinson<span class="status-badge bg-hadir">Hadir</span></p>
-                <p style="font-size: 0.8rem; font-style: italic;">Mantapp mas broo, Selamat menempuh hidup baru...JoshtLurd🤟🏻😎!</p>
-            </div>
-        </div>
-
-        <div id="wish-wall">
-            <div class="wish-item">
-                <p class="wish-name">Cucu Kesayangan Rasulullah<span class="status-badge bg-hadir">Hadir</span></p>
-                <p style="font-size: 0.8rem; font-style: italic;">Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fii khoir 🤲🏻♥️!</p>
-            </div>
-        </div>
+        <div id="wish-wall"></div>
 
         <div class="nav-container">
             <button class="btn-nav" onclick="nextPage(5)"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
@@ -354,92 +360,166 @@
     </div>
 
     <script>
-        // Toast Notification Logic
-        function showToast(message) {
-            const toast = document.getElementById('toast-notification');
-            const toastMsg = document.getElementById('toast-message');
-            toastMsg.innerText = message;
-            toast.style.display = 'flex';
-            toast.classList.remove('animate__fadeOutDown');
-            toast.classList.add('animate__fadeInUp');
+        let hadirCount = 179;
+        let tidakHadirCount = 17;
+        let hasSubmitted = false;
 
-            setTimeout(() => {
-                toast.classList.remove('animate__fadeInUp');
-                toast.classList.add('animate__fadeOutDown');
-                setTimeout(() => { toast.style.display = 'none'; }, 500);
-            }, 3000);
+        // --- RSVP DATA TERINTEGRASI ---
+        const hadirWishes = [
+            "Selamat ya Fulan & Fulani! Semoga sakinah mawadah warahmah selamanya! ✨",
+            "MasyaAllah, lancar sampai hari H ya. InsyaAllah hadir bareng keluarga!",
+            "Ciee yang udah halal! Semoga menjadi keluarga yang berkah ya bro!",
+            "Happy Wedding! Semoga cinta kalian abadi seperti angka delapan.",
+            "Alhamdulillah, ikut seneng denger kabarnya. Otw nyiapin baju kondangan!",
+            "Barakallahulakuma... Doa terbaik buat kalian berdua dari kami sekeluarga.",
+            "Mantap jiwa! Akhirnya pelabuhan terakhir ketemu juga. Samawa ya!",
+            "Selamat menempuh hidup baru! Jangan lupa bahagia terus setiap hari.",
+            "Congrats bestie! Cantik banget pasti nanti pas resepsi. See you!",
+            "Selamat ya mas Fulan! Semoga menjadi imam yang amanah buat mbak Fulani.",
+            "Semoga Allah memberkahi pernikahan kalian dengan keturunan yang sholeh.",
+            "Ikut bahagia! Insya Allah raga ini hadir menyaksikan janji suci kalian.",
+            "Wih, pecah telor juga akhirnya! Selamat ibadah terlama ya kalian.",
+            "Selamat ya neng! Semoga rumah tangganya selalu penuh tawa dan cinta.",
+            "Happy for you! Moga lancar akad dan resepsinya tanpa kendala apapun.",
+            "Masya Allah pasangan serasi! Semoga cepat dapat momongan lucu ya.",
+            "Sing lancar jaya mpe hari H lur! Siapkan hidangan terbaiknya hehe.",
+            "Selamat ya! Semoga setiap langkah kalian selalu diridhoi Allah SWT.",
+            "Waaah selamat ya neng cantik! Akhirnya dapet pangeran yang tepat.",
+            "Happy wedding day! May your journey be filled with laughter and love.",
+            "Semoga sakinah mawadah warahmah. Maaf kalo makannya banyak nanti!",
+            "Lancar-lancar ya neng. Sing dadi istri yang sholehah buat mas Fulan.",
+            "Selamat menempuh hidup baru! Jaga komunikasi dan saling sabar ya.",
+            "Akhirnya ya... Setelah drama panjang akhirnya sah juga! Happy for you!",
+            "Selamat bro! Jangan lupa olahraga biar fit pas hari H nanti ✌️",
+            "Barakallah! Semoga pernikahan ini menjadi pintu surga buat kalian.",
+            "Selamat ya neng Fulani. Akhirnya nemu pelabuhan terakhir yang pas.",
+            "Happy Wedding! Moga nular ke temen-temen tongkrongan yang jomblo.",
+            "Congrats ya! Semoga langgeng terus sampai maut memisahkan.",
+            "Selamat ya mas! Jaga baik-baik permata hatinya ini. Sakinah selalu!",
+            "Insya Allah hadir! Udah beli baju baru khusus buat kondangan kalian.",
+            "Selamat menempuh bahtera rumah tangga. Semoga ombaknya selalu tenang.",
+            "Happy Wedding! May your love grow stronger every single day!",
+            "Selamat ya! Ikut seneng banget ngeliat kalian akhirnya bersatu.",
+            "Semoga menjadi keluarga yang harmonis dan inspirasi buat banyak orang.",
+            "Congrats! Siap mengosongkan perut buat nyobain semua menu nanti!",
+            "Selamat ya mas bro! Lancar sampai hari H dan setelahnya juga.",
+            "Masya Allah, kabar bahagia di tahun ini. Sampai ketemu di lokasi!",
+            "Selamat menempuh babak baru kehidupan. Bahagia selalu ya kalian!",
+            "Selamat ya! Semoga rumah tangga kalian selalu dijauhkan dari badai."
+        ];
+
+        const tidakHadirWishes = [
+            "Afwan akhi, raga tak sampai tapi doa mengangkasa. Samawa ya! 🙏",
+            "Punten pisan, pas hari H lagi ada tugas ke luar kota. Titip doa ya!",
+            "Sedih banget gak bisa hadir, berbarengan sama acara wisuda adik 😭.",
+            "Mugo-mugo acarane lancar mas, aku isih nang rantau durung iso balik.",
+            "Hampura lur, raga lagi kurang fit. Doa terbaik buat Fulan & Fulani!",
+            "Selamat ya! Maaf kado nyusul via paket, orangnya gak bisa hadir hiks.",
+            "Ya Allah maaf banget belum bisa hadir, titip salam buat mempelai ya.",
+            "Waduh bentrok sama kondangan sodara kandung mas. Sukses ya acaranya!",
+            "Selamat menempuh hidup baru! Maaf raga ini tertahan di pekerjaan 💼",
+            "Insha Allah doa saya sampai ke sana. Semoga kalian bahagia selamanya!",
+            "Punten pisan neng, abdi nuju di luar pulau. Mugi sakinah mawadah.",
+            "Maaf mas bro, jadwal shift kerja gak bisa dituker. Lancar ya akadnya!",
+            "Hiks, pengen banget dateng tapi jarak memisahkan. Samawa ya!"
+        ];
+
+        const randomNames = ["Dimas Nugraha", "Siti Aisyah", "Budi Santoso", "Larasati", "Asep Sunandar", "Dewi Lestari", "Rizky Ramadhan", "Putri Utami", "Eko Prasetyo", "Indah Permata", "Joko Susilo", "Ani Wijaya", "Bambang Pamungkas", "Sari Indah", "Guntur Pratama", "Maya Kartika", "Doni Setiawan", "Rina Rahmawati", "Agus Hermawan", "Nani Suryani", "Hendra Saputra", "Fitri Handayani", "Dedi Kurniawan", "Siska Amelia", "Andi Wijaya", "Yanti Susanti", "Irfan Hakim", "Desi Ratnasari", "Taufik Hidayat", "Linda Sari", "Wawan Setiawan", "Santi Maharani", "Rully Aris", "Kiki Fatmala", "Yanto Wijaya", "Lia Marlina", "Adit Nugroho", "Nur Hasanah", "Feri Irawan", "Ika Pertiwi", "Tono Sudibyo", "Adi Saputra", "Nina Marliana", "Rian Hidayat", "Lina Marlina", "Yogi Pratama", "Nita Permata", "Sony Setiawan", "Vina Panduwinata"];
+
+        // --- CORE FUNCTIONS ---
+        function loadInitialWishes() {
+            const wall = document.getElementById('wish-wall');
+            let combined = [];
+            hadirWishes.forEach((w, i) => combined.push({ name: randomNames[i % randomNames.length], status: "Hadir", wish: w, class: "bg-hadir" }));
+            tidakHadirWishes.forEach((w, i) => combined.push({ name: randomNames[(i+30) % randomNames.length], status: "Tidak Hadir", wish: w, class: "bg-tidak" }));
+            combined.sort(() => Math.random() - 0.5);
+            combined.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'wish-item';
+                div.innerHTML = `<p class="wish-name">${item.name} <span class="status-badge ${item.class}">${item.status}</span></p>
+                                 <p style="font-size: 0.8rem; font-style: italic;">${item.wish}</p>`;
+                wall.appendChild(div);
+            });
         }
 
-        // Modal Logic
-        function showCustomModal(text) {
-            document.getElementById('modal-text').innerText = text;
+        function showAntiSSToast() {
+            const toast = document.getElementById('anti-ss-toast');
+            toast.style.display = 'block';
+            toast.classList.add('animate__fadeInUp');
+            setTimeout(() => {
+                toast.classList.replace('animate__fadeInUp', 'animate__fadeOutDown');
+                setTimeout(() => { toast.style.display = 'none'; }, 500);
+            }, 4000);
+        }
+
+        document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'hidden') showAntiSSToast(); });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = message;
+            toast.style.display = 'flex';
+            toast.classList.add('animate__fadeInUp');
+            setTimeout(() => { toast.classList.replace('animate__fadeInUp', 'animate__fadeOutDown'); }, 3000);
+        }
+
+        function showCustomModal() {
             document.getElementById('custom-modal').style.display = 'flex';
         }
 
-        function hideModal() {
-            document.getElementById('custom-modal').style.display = 'none';
-        }
+        function hideModal() { document.getElementById('custom-modal').style.display = 'none'; }
 
-        // Welcome Logic
         function submitName() {
-            const nameInput = document.getElementById('input-name').value;
-            if (nameInput.trim() !== "") {
-                document.getElementById('guest-name').innerText = nameInput;
-                document.getElementById('rsvp-name').value = nameInput;
-                
-                const overlay = document.getElementById('welcome-overlay');
-                overlay.classList.add('animate__animated', 'animate__fadeOut');
-                setTimeout(() => { overlay.style.display = 'none'; }, 1000);
+            const val = document.getElementById('input-name').value;
+            if (val.trim() !== "") {
+                document.getElementById('guest-name').innerText = val;
+                document.getElementById('rsvp-name').value = val;
+                document.getElementById('welcome-overlay').style.display = 'none';
+                loadInitialWishes();
             } else {
-                showCustomModal("Mohon masukkan nama Anda terlebih dahulu.");
+                showToast("Masukkan nama Anda");
             }
         }
 
-        // RSVP Handler
         document.getElementById('rsvp-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = document.getElementById('rsvp-name').value;
+            if(hasSubmitted) return;
             const status = document.getElementById('rsvp-status').value;
-            const wish = document.getElementById('rsvp-wish').value;
-            
-            if(name && status && wish) {
-                const wall = document.getElementById('wish-wall');
-                const badgeClass = status === 'Hadir' ? 'bg-hadir' : 'bg-tidak';
-                const newItem = document.createElement('div');
-                newItem.className = 'wish-item animate__animated animate__fadeIn';
-                newItem.innerHTML = `
-                    <p class="wish-name">${name} <span class="status-badge ${badgeClass}">${status}</span></p>
-                    <p style="font-size: 0.8rem; font-style: italic;">${wish}</p>
-                `;
-                wall.prepend(newItem);
-                
-                document.getElementById('rsvp-status').value = "";
-                document.getElementById('rsvp-wish').value = "";
-                
-                showCustomModal("Kami yang berbahagia mengucapkan terimakasih atas konfirmasi kehadiran dan ucapan hangatnya.");
+            if(status === 'Hadir') {
+                hadirCount++;
+                document.getElementById('count-hadir').innerText = hadirCount;
+            } else {
+                tidakHadirCount++;
+                document.getElementById('count-tidak').innerText = tidakHadirCount;
             }
+            const wall = document.getElementById('wish-wall');
+            const item = document.createElement('div');
+            item.className = 'wish-item animate__animated animate__fadeIn';
+            item.innerHTML = `<p class="wish-name">${document.getElementById('rsvp-name').value} <span class="status-badge ${status === 'Hadir' ? 'bg-hadir' : 'bg-tidak'}">${status}</span></p>
+                             <p style="font-size: 0.8rem; font-style: italic;">${document.getElementById('rsvp-wish').value}</p>`;
+            wall.prepend(item);
+            hasSubmitted = true;
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').style.opacity = "0.5";
+            showCustomModal();
         });
 
         function startInvitation() {
-            const m = document.getElementById('bg-music');
-            m.volume = 0.25; m.play();
+            document.getElementById('bg-music').play();
             document.getElementById('audio-ctrl').style.display = 'flex';
             nextPage(2);
         }
 
         function nextPage(n) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active', 'animate__fadeIn'));
-            const target = document.getElementById('page-' + n);
-            target.classList.add('active', 'animate__fadeIn');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + n).classList.add('active');
             window.scrollTo(0,0);
         }
 
         let isPlaying = true;
         function toggleAudio() {
             const m = document.getElementById('bg-music');
-            const i = document.getElementById('audio-icon');
-            if (isPlaying) { m.pause(); i.className = 'fas fa-pause'; }
-            else { m.play(); i.className = 'fas fa-music'; }
+            if (isPlaying) { m.pause(); document.getElementById('audio-icon').className = 'fas fa-pause'; }
+            else { m.play(); document.getElementById('audio-icon').className = 'fas fa-music'; }
             isPlaying = !isPlaying;
         }
 
@@ -459,20 +539,14 @@
         setInterval(() => {
             const now = new Date().getTime();
             const diff = weddingDate - now;
-            if (document.getElementById('days')) {
-                document.getElementById('days').innerText = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
-                document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-                document.getElementById('minutes').innerText = Math.max(0, Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
-                document.getElementById('seconds').innerText = Math.max(0, Math.floor((diff % (1000 * 60)) / 1000));
-            }
+            document.getElementById('days').innerText = Math.max(0, Math.floor(diff / 86400000));
+            document.getElementById('hours').innerText = Math.max(0, Math.floor((diff % 86400000) / 3600000));
+            document.getElementById('minutes').innerText = Math.max(0, Math.floor((diff % 3600000) / 60000));
+            document.getElementById('seconds').innerText = Math.max(0, Math.floor((diff % 60000) / 1000));
         }, 1000);
 
         function copyText(id) {
-            const t = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(t).then(() => {
-                const message = id === 'addr' ? "Alamat berhasil disalin!" : "Nomor rekening berhasil disalin!";
-                showToast(message);
-            });
+            navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => showToast("Berhasil disalin!"));
         }
     </script>
 </body>
