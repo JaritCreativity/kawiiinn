@@ -15,11 +15,35 @@
             --gold: #C0A062;
             --charcoal: #2F2F2F;
             --white: #FFFFFF;
+            --velvet: #8B0000;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Noto Sans JP', sans-serif; background-color: var(--beige); color: var(--charcoal); overflow: hidden; height: 100vh; }
         h1, h2, h3, .serif { font-family: 'Noto Serif JP', serif; }
+
+        /* --- LUXURY CURTAIN SYSTEM --- */
+        .curtain-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2500; pointer-events: none; display: flex;
+        }
+        .curtain-side {
+            flex: 1; height: 100%; background: var(--velvet);
+            background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            transition: transform 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+        /* Posisi awal: tersembunyi di luar layar */
+        .curtain-left { transform: translateX(-100%); border-right: 2px solid var(--gold); }
+        .curtain-right { transform: translateX(100%); border-left: 2px solid var(--gold); }
+
+        /* Animasi menutup */
+        .curtain-wrapper.closing .curtain-left { transform: translateX(0); }
+        .curtain-wrapper.closing .curtain-right { transform: translateX(0); }
+
+        /* Animasi membuka */
+        .curtain-wrapper.opening .curtain-left { transform: translateX(-100%); }
+        .curtain-wrapper.opening .curtain-right { transform: translateX(100%); }
 
         /* Sakura Animation */
         #sakura-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
@@ -30,7 +54,7 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- STYLING WELCOME OVERLAY --- */
+        /* --- WELCOME OVERLAY --- */
         #welcome-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--beige);
@@ -54,7 +78,7 @@
             margin-bottom: 25px; width: 100%; outline: none; background: transparent;
         }
 
-        /* --- STYLING MODAL PESAN --- */
+        /* --- MODAL PESAN --- */
         #custom-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7); z-index: 3000;
@@ -70,7 +94,7 @@
         .modal-box h3 { font-size: 1.8rem; margin-bottom: 15px; color: var(--charcoal); }
         .modal-box p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; color: #555; }
 
-        /* --- STYLING TOAST & ANTI-SS --- */
+        /* --- TOAST & ANTI-SS --- */
         #toast-notification {
             position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
             background: var(--charcoal); color: var(--gold); padding: 12px 25px;
@@ -93,9 +117,17 @@
             display: none; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; padding: 20px; overflow-y: auto; background: var(--beige);
             background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
-            transition: all 0.8s ease-in-out;
+            /* Animasi mewah saat aktif */
+            opacity: 0;
+            transform: scale(1.1) translateY(20px);
+            transition: opacity 1s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .page.active { display: flex; animation: slideInUp 0.8s forwards; }
+        .page.active { 
+            display: flex; 
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            z-index: 5;
+        }
 
         #page-1 { background-color: var(--beige); position: relative; overflow: hidden; }
         .cover-pattern { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://www.transparenttextures.com/patterns/oriental-tiles.png'); opacity: 0.15; z-index: 0; animation: bgMove 60s linear infinite; }
@@ -117,7 +149,7 @@
         .timer-box span { font-size: 1.4rem; font-weight: bold; }
         .timer-box label { font-size: 0.6rem; color: var(--white); text-transform: uppercase; }
         
-        .card-outline { background: white; border: 1px solid var(--gold); padding: 5px; margin: 10px 0; width: 100%; max-width: 400px; transform: scale(0.9); opacity: 0; transition: all 1s delay 0.3s; }
+        .card-outline { background: white; border: 1px solid var(--gold); padding: 5px; margin: 10px 0; width: 100%; max-width: 400px; transform: scale(0.9); opacity: 0; transition: all 1s; }
         .page.active .card-outline { transform: scale(1); opacity: 1; }
         .card-inner { border: 1px solid var(--gold); padding: 20px; position: relative; }
 
@@ -152,6 +184,12 @@
     </style>
 </head>
 <body>
+
+    <!-- Curtain Wrapper -->
+    <div class="curtain-wrapper" id="curtain">
+        <div class="curtain-side curtain-left"></div>
+        <div class="curtain-side curtain-right"></div>
+    </div>
 
     <div id="anti-ss-toast" class="animate__animated">
         Tidak dapat mengambil screenshot, silahkan bagikan saja Link Undangan ini
@@ -299,7 +337,6 @@
             <button onclick="copyText('addr')" class="btn-gold" style="padding: 5px 15px; font-size: 0.7rem;">Salin Alamat</button>
         </div>
 
-        <!-- Penambahan kata-kata sebelum Rekening Bank -->
         <p style="font-size: 0.85rem; color: var(--gold); font-weight: bold; margin-bottom: 10px;"> Atau bisa Transfer melalui Virtual Account/Rekening berikut:</p>
 
         <div class="bank-card">
@@ -369,7 +406,6 @@
         let tidakHadirCount = 17;
         let hasSubmitted = false;
 
-        // --- RSVP DATA TERINTEGRASI ---
         const hadirWishes = [
             "Selamat ya Fulan & Fulani! Semoga sakinah mawadah warahmah selamanya! ✨",
             "MasyaAllah, lancar sampai hari H ya. InsyaAllah hadir bareng keluarga!",
@@ -431,7 +467,6 @@
 
         const randomNames = ["Dimas Nugraha", "Siti Aisyah", "Budi Santoso", "Larasati", "Asep Sunandar", "Dewi Lestari", "Rizky Ramadhan", "Putri Utami", "Eko Prasetyo", "Indah Permata", "Joko Susilo", "Ani Wijaya", "Bambang Perkasa", "Sari Indah", "Guntur Pratama", "Maya Kartika", "Doni Setiawan", "Rina Rahmawati", "Agus Hermawan", "Nani Suryani", "Hendra Saputra", "Fitri Handayani", "Dedi Kurniawan", "Siska Amelia", "Andi Wijaya", "Yanti Susanti", "Irfan Hakim", "Firly Cantiks" , "Desi Ratnasari", "Taufik Hidayat", "Linda Sari", "Wawan Setiawan", "Santi Maharani", "Rully Irawan", "Kiki Fatmala", "Yanto Wijaya", "Lia Marlina", "Adit Nugroho", "Nur Hasanah", "Feri Irawan", "Ika Pertiwi", "Tono Sudibyo", "Adi Saputra", "Nina Marliana", "Rian Hidayat", "Lina Marlina", "Yogi Pratama", "Nita Permata", "Sony Setiawan", "Vina Panduwinata"];
 
-        // --- CORE FUNCTIONS ---
         function loadInitialWishes() {
             const wall = document.getElementById('wish-wall');
             let combined = [];
@@ -476,10 +511,32 @@
         function submitName() {
             const val = document.getElementById('input-name').value;
             if (val.trim() !== "") {
+                const curtain = document.getElementById('curtain');
+                
+                // 1. Set nama
                 document.getElementById('guest-name').innerText = val;
                 document.getElementById('rsvp-name').value = val;
-                document.getElementById('welcome-overlay').style.display = 'none';
-                loadInitialWishes();
+
+                // 2. Animasi tirai menutup layar
+                curtain.classList.add('closing');
+
+                setTimeout(() => {
+                    // 3. Sembunyikan input nama di balik tirai
+                    document.getElementById('welcome-overlay').style.display = 'none';
+                    loadInitialWishes();
+                    
+                    // 4. Pastikan cover aktif
+                    nextPage(1);
+
+                    // 5. Buka tirai secara mewah
+                    curtain.classList.remove('closing');
+                    curtain.classList.add('opening');
+                    
+                    // Hapus dari DOM setelah selesai agar tidak mengganggu klik
+                    setTimeout(() => {
+                        curtain.style.display = 'none';
+                    }, 2100);
+                }, 1800); // Waktu tirai menutup sempurna
             } else {
                 showToast("Masukkan nama Anda");
             }
@@ -514,9 +571,37 @@
             nextPage(2);
         }
 
+        // --- SISTEM TRANSISI MEWAH ---
         function nextPage(n) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + n).classList.add('active');
+            const pages = document.querySelectorAll('.page');
+            const currentPage = document.querySelector('.page.active');
+            const targetPage = document.getElementById('page-' + n);
+
+            if (currentPage) {
+                // Efek keluar: Mengecil dan menghilang halus
+                currentPage.style.opacity = '0';
+                currentPage.style.transform = 'scale(0.9) translateY(-20px)';
+                
+                setTimeout(() => {
+                    currentPage.classList.remove('active');
+                    
+                    // Aktifkan halaman target
+                    targetPage.classList.add('active');
+                    
+                    // Beri jeda kecil untuk memulai animasi masuk
+                    setTimeout(() => {
+                        targetPage.style.opacity = '1';
+                        targetPage.style.transform = 'scale(1) translateY(0)';
+                    }, 50);
+                }, 600); // Jeda transisi keluar
+            } else {
+                // Jika tidak ada halaman aktif (initial load)
+                targetPage.classList.add('active');
+                setTimeout(() => {
+                    targetPage.style.opacity = '1';
+                    targetPage.style.transform = 'scale(1) translateY(0)';
+                }, 50);
+            }
             window.scrollTo(0,0);
         }
 
