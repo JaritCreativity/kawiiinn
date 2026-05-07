@@ -62,53 +62,50 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-/* --- Perbaikan Galeri Page 4 --- */
-.gallery-grid { 
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); /* 2 kolom agar foto besar */
-    gap: 15px; 
-    width: 90%;
-    max-width: 600px; 
-    padding: 20px;
+          /* --- Perbaikan Total Galeri Page 4 --- */
+.gallery-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 0 15px;
+    margin: 0 auto;
     z-index: 10;
 }
 
+.gallery-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); /* Tetap 2 kolom sejajar */
+    gap: 12px; 
+    width: 100%;
+}
+
 .gallery-frame { 
-    padding: 10px; /* Frame putih lebih tebal */
     background: white; 
-    border: 1.5px solid var(--gold); 
-    box-shadow: 6px 6px 0px var(--gold); 
-    transition: transform 0.3s; 
+    border: 1px solid var(--gold); 
+    padding: 6px;
+    box-shadow: 4px 4px 0px var(--gold);
+    display: flex;
 }
 
 .gallery-img { 
     width: 100%; 
-    height: 200px; /* Ukuran foto diperbesar */
+    height: 160px; /* Ukuran standar agar seragam */
     object-fit: cover; 
-    display: block; 
+    display: block;
 }
 
-/* --- Bingkai Sudut Page 4 --- */
-.corner-border {
+/* Bingkai Sudut Mewah */
+.luxury-border {
     position: absolute;
-    width: 80px;
-    height: 80px;
-    border: 5px solid var(--gold);
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--gold);
     pointer-events: none;
     z-index: 5;
-    opacity: 0.7;
 }
-
-.t-l { top: 20px; left: 20px; border-right: none; border-bottom: none; }
-.t-r { top: 20px; right: 20px; border-left: none; border-bottom: none; }
-.b-l { bottom: 100px; left: 20px; border-right: none; border-top: none; }
-.b-r { bottom: 100px; right: 20px; border-left: none; border-top: none; }
-
-@media (max-width: 600px) {
-    .gallery-img { height: 160px; } /* Penyesuaian tinggi untuk HP */
-    .corner-border { width: 50px; height: 50px; border-width: 3px; }
-}
-        
+.tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+.tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+.bl { bottom: 120px; left: 20px; border-right: none; border-top: none; }
+.br { bottom: 120px; right: 20px; border-left: none; border-top: none; }
 
         /* --- WELCOME OVERLAY --- */
         #welcome-overlay {
@@ -362,29 +359,32 @@
 
     <!-- HALAMAN 4 -->
     <div id="page-4" class="page">
-    <div class="corner-border t-l"></div>
-    <div class="corner-border t-r"></div>
-    <div class="corner-border b-l"></div>
-    <div class="corner-border b-r"></div>
+    <div id="page-4" class="page">
+    <div class="luxury-border tl"></div>
+    <div class="luxury-border tr"></div>
+    <div class="luxury-border bl"></div>
+    <div class="luxury-border br"></div>
 
-    <h2 class="serif" style="color: var(--gold); margin-bottom: 20px; z-index: 10; font-size: 2rem;">Momen Bahagia</h2>
+    <h2 class="serif" style="color: var(--gold); margin-bottom: 25px; z-index: 10;">Momen Bahagia</h2>
     
-    <div class="gallery-grid">
-        <div class="gallery-frame animate__animated animate__zoomIn">
-            <img src="retouch_2025100809345111.jpg" class="gallery-img">
+    <div class="gallery-container">
+        <div class="gallery-grid">
+            <div class="gallery-frame">
+                <img src="retouch_2025100809345111.jpg" class="gallery-img">
+            </div>
+            <div class="gallery-frame">
+                <img src="IMG-20251004-WA0249.jpg" class="gallery-img">
+            </div>
+            <div class="gallery-frame">
+                <img src="IMG-20251004-WA0198.jpg" class="gallery-img">
+            </div>
+            <div class="gallery-frame">
+                <img src="IMG-20250915-WA0076.jpg" class="gallery-img">
+            </div>
         </div>
-        <div class="gallery-frame animate__animated animate__zoomIn" style="animation-delay: 0.2s;">
-            <img src="IMG-20251004-WA0249.jpg" class="gallery-img">
-        </div>
-        <div class="gallery-frame animate__animated animate__zoomIn" style="animation-delay: 0.4s;">
-            <img src="IMG-20251004-WA0198.jpg" class="gallery-img">
-        </div>
-        <div class="gallery-frame animate__animated animate__zoomIn" style="animation-delay: 0.6s;">
-            <img src="IMG-20250915-WA0076.jpg" class="gallery-img">
-        </div>
-        </div>
+    </div>
 
-    <div class="nav-container" style="z-index: 20; margin-top: 20px;">
+    <div class="nav-container" style="z-index: 20;">
         <button class="btn-nav" onclick="nextPage(3)"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
         <button class="btn-nav" onclick="nextPage(5)">Selanjutnya <i class="fas fa-chevron-right"></i></button>
     </div>
